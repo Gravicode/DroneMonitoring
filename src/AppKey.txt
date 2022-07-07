@@ -1,0 +1,9 @@
+APP INFORMATION
+SDK Type:Windows SDK
+APP Name:DroneMonitoring
+APP ID:1120202
+Package Name:DroneMonitoring
+App Key:d0e39a77f1232d9a23d95f0c
+Category:Bridge Monitoring
+Description
+Bridge inspection through computer vision
