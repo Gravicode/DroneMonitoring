@@ -71,7 +71,8 @@
                         <TextBlock FontWeight="Bold">
                         *Note* DO NOT click this button when it is dangerous for aircraft to takeoff.
                         </TextBlock>
-                        <Button Margin="0,8,0,0" Command="{Binding StartTakeoff}">Start Auto Takeoff</Button>
+                        <Button Margin="0,8,0,0" Command="{Binding StartTakeoff}">Start Auto Takeoff</Button> 
+                        <Button Margin="0,8,0,0" Command="{Binding StartLanding}">Start Landing</Button>
                     </StackPanel>
                 </StackPanel>
 

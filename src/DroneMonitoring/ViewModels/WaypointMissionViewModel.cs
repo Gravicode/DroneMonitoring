@@ -1,6 +1,6 @@
 ﻿using DJI.WindowsSDK;
 using DJI.WindowsSDK.Mission.Waypoint;
-using DJIUWPSample.Commands;
+using DroneMonitoring.Commands;
 using DJIUWPSample.ViewModels;
 
 using System;

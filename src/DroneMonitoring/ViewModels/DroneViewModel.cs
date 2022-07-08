@@ -1,7 +1,6 @@
 ﻿using DJI.WindowsSDK;
-using DroneMonitoring.Commands;
 using DJIUWPSample.ViewModels;
-
+using DroneMonitoring.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +13,11 @@ using Windows.UI.Popups;
 
 namespace DroneMonitoring.ViewModels
 {
-    class ComponentViewModel : ViewModelBase
+    class DroneViewModel : ViewModelBase
     {
+        public DroneViewModel()
+        {
+        }
         public String AircraftSetName { set; get; }
         String _aircraftGetName = "";
         public String AircraftGetName
@@ -87,13 +89,13 @@ namespace DroneMonitoring.ViewModels
             {
                 if (_setAircraftName == null)
                 {
-                    _setAircraftName = new RelayCommand(async delegate()
+                    _setAircraftName = new RelayCommand(async delegate ()
                     {
                         String message = "";
                         do
                         {
                             var toSet = AircraftSetName;
-                            if (toSet==null || toSet.Length == 0)
+                            if (toSet == null || toSet.Length == 0)
                             {
                                 message = "Input your name first!";
                                 break;
@@ -157,7 +159,7 @@ namespace DroneMonitoring.ViewModels
                 return _startTakeoff;
             }
         }
-        
+
         public ICommand _startLanding;
         public ICommand StartLanding
         {
@@ -175,5 +177,6 @@ namespace DroneMonitoring.ViewModels
                 return _startLanding;
             }
         }
+
     }
 }

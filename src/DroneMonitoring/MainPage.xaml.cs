@@ -1,4 +1,6 @@
 ﻿using DJI.WindowsSDK;
+using DroneMonitoring.Helpers;
+using DroneMonitoring.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -80,6 +82,7 @@ namespace DroneMonitoring
         public MainPage()
         {
             this.InitializeComponent();
+            
             var module = navigationModules[0];
             NavView.MenuItems.Add(new NavigationViewItemHeader() { Content = module.header });
             foreach (var item in module.items)
@@ -109,26 +112,31 @@ namespace DroneMonitoring
 
         private void NavView_Loaded(object sender, RoutedEventArgs e)
         {
-            DJISDKManager.Instance.SDKRegistrationStateChanged += Instance_SDKRegistrationEvent;
-        }
-
-        private async void Instance_SDKRegistrationEvent(SDKRegistrationState state, SDKError resultCode)
-        {
-            if (resultCode == SDKError.NO_ERROR)
-            {
-                await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            //DJISDKManager.Instance.SDKRegistrationStateChanged += Instance_SDKRegistrationEvent;
+            var reg = ServiceContainer.Instance.Resolve<SDKRegistrationService>();
+            reg.StateChanged += async (a, ev) => {
+                if (ev.Result == SDKError.NO_ERROR)
                 {
-                    for (int i = 1; i < navigationModules.Count; ++i)
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                     {
-                        var module = navigationModules[i];
-                        NavView.MenuItems.Add(new NavigationViewItemHeader() { Content = module.header });
-                        foreach (var item in module.items)
+                        for (int i = 1; i < navigationModules.Count; ++i)
                         {
-                            NavView.MenuItems.Add(item.Key);
+                            var module = navigationModules[i];
+                            NavView.MenuItems.Add(new NavigationViewItemHeader() { Content = module.header });
+                            foreach (var item in module.items)
+                            {
+                                NavView.MenuItems.Add(item.Key);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+            };
+            if (!reg.IsActive)
+            {
+                reg.Register(AppConstants.AppKey);
             }
         }
+
+        
     }
 }

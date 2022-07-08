@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 
 
-namespace DJIUWPSample.Commands
+namespace DroneMonitoring.Commands
 {
     /// <summary>
     /// A command whose sole purpose is to relay its functionality 

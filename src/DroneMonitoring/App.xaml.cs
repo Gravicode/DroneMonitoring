@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DroneMonitoring.Helpers;
+using DroneMonitoring.Services;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +27,9 @@ namespace DroneMonitoring
         public App()
         {
             this.InitializeComponent();
+            AppConfig.Load();
+            ServiceContainer.Instance.Register<SDKRegistrationService, SDKRegistrationService>();
+            ServiceContainer.Instance.Build();
             this.Suspending += OnSuspending;
         }
 
