@@ -76,6 +76,12 @@ namespace DroneMonitoring
                     new KeyValuePair<string, Type>("Playback", typeof(Playback.PlaybackPage)),
                 },
             },
+            new SDKModuleSampleItems() {
+                header = "Pilot", items = new List<KeyValuePair<String, Type>>()
+                {
+                    new KeyValuePair<string, Type>("Pilot", typeof(Pages.PilotPage)),
+                },
+            },
 
         };
 
