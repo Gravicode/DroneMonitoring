@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DroneMonitoring.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,7 +29,11 @@ namespace DroneMonitoring.Pages
         Gamepad controller;
         DispatcherTimer dispatcherTimer;
         TimeSpan period = TimeSpan.FromMilliseconds(100);
-
+        PilotViewModel vm;
+        float Pitch;
+        float Roll;
+        float Yaw;
+        float Throttle;
         public PilotPage()
         {
 
@@ -43,8 +48,8 @@ namespace DroneMonitoring.Pages
             //public static event EventHandler<Gamepad> GamepadRemoved
             Gamepad.GamepadRemoved += Gamepad_GamepadRemoved;
             //public event TypedEventHandler<IGameController, Headset> HeadsetConnected
-
-
+            vm = new PilotViewModel();
+            DataContext = vm;
         }
 
         #region EventHandlers
@@ -92,8 +97,6 @@ namespace DroneMonitoring.Pages
                 pbRightThumbstickX.Value = reading.RightThumbstickX;
                 pbRightThumbstickY.Value = reading.RightThumbstickY;
 
-                pbRightThumbstickY.Value = reading.RightThumbstickY;
-
                 pbLeftTrigger.Value = reading.LeftTrigger;
                 pbRightTrigger.Value = reading.RightTrigger;
 
@@ -113,6 +116,32 @@ namespace DroneMonitoring.Pages
                 ChangeVisibility(reading.Buttons.HasFlag(GamepadButtons.LeftShoulder), rectLeftShoulder);
                 ChangeVisibility(reading.Buttons.HasFlag(GamepadButtons.RightShoulder), recRightShoulder);
 
+                if (reading.Buttons.HasFlag(GamepadButtons.Menu))
+                {
+                    if(vm.StartTakeoff.CanExecute(null))
+                        vm.StartTakeoff.Execute(null);
+                }
+                if (reading.Buttons.HasFlag(GamepadButtons.View))
+                {
+                    if (vm.StartLanding.CanExecute(null))
+                        vm.StartLanding.Execute(null);
+                }
+                Pitch = (float) reading.LeftThumbstickY;
+                Roll = (float)reading.LeftThumbstickX;
+                Yaw = (float)reading.RightThumbstickX;
+                Throttle = (float)reading.RightThumbstickY;
+
+                if (vm.Pitch != Pitch || vm.Roll != Roll || vm.Yaw != Yaw || vm.Throttle != Throttle)
+                {
+                    vm.Pitch = Pitch;
+                    vm.Roll = Roll;
+                    vm.Yaw = Yaw;
+                    vm.Throttle = Throttle;
+                    if (vm.MoveAirCraft.CanExecute(null))
+                    {
+                        vm.MoveAirCraft.Execute(null);
+                    }
+                }
             }
 
         }

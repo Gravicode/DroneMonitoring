@@ -134,6 +134,8 @@ namespace DroneMonitoring
                                 NavView.MenuItems.Add(item.Key);
                             }
                         }
+                        var selitem = navigationModules.Last();
+                        ContentFrame.Navigate(selitem.items.First().Value);
                     });
                 }
             };

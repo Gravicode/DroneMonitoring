@@ -151,6 +151,7 @@
     </Compile>
     <Compile Include="ViewModels\ComponentViewModel.cs" />
     <Compile Include="ViewModels\DroneViewModel.cs" />
+    <Compile Include="ViewModels\PilotViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\WaypointMissionViewModel.cs" />
     <Compile Include="WaypointHandling\SimulatorPage.xaml.cs">
